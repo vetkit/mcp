@@ -24,6 +24,9 @@ or by bumping the version in your MCP client configuration.
   telemetry or analytics. `https://` is required; plain `http://` is accepted only for `localhost`.
 - **API key:** read from `VETKIT_API_KEY` and sent only as an `Authorization: Bearer` header to `VETKIT_API_URL`.
   It is never logged, written to disk or included in error messages.
+- **Hosted runners:** some MCP directories, such as Glama, can run the server for you. The API key is then stored
+  by that service, not only on your machine. Give such a deployment a narrowly scoped key with an expiry, or run
+  the package locally with `npx`.
 - **Narrow API surface:** the bundled client exposes only the 37 API methods the tools use. Administrative,
   billing and account-management endpoints are not in the package. The API key's scopes decide what the server
   can do; read-only keys cannot start audits or change data.
