@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ConfigError, DEFAULT_API_URL, DEFAULT_APP_URL, loadConfig } from './config.js';
+import { ConfigError, DEFAULT_API_URL, DEFAULT_APP_URL, loadConfig, trimTrailingSlashes } from './config.js';
 import { API_KEY, ORG_ID } from './test/fixtures.js';
 
 const expectConfigError = (env: NodeJS.ProcessEnv, match: RegExp): ConfigError => {
@@ -79,5 +79,19 @@ describe('loadConfig', () => {
   it('validates VETKIT_ORG_ID', () => {
     expect(loadConfig({ VETKIT_API_KEY: API_KEY, VETKIT_ORG_ID: ORG_ID }).orgId).toBe(ORG_ID);
     expectConfigError({ VETKIT_API_KEY: API_KEY, VETKIT_ORG_ID: 'my-org' }, /UUID/);
+  });
+});
+
+describe('trimTrailingSlashes', () => {
+  it('removes every trailing slash and nothing else', () => {
+    expect(trimTrailingSlashes('https://app.example.test///')).toBe('https://app.example.test');
+    expect(trimTrailingSlashes('/a/b')).toBe('/a/b');
+    expect(trimTrailingSlashes('///')).toBe('');
+  });
+
+  it('stays linear on long runs of slashes', () => {
+    const start = performance.now();
+    expect(trimTrailingSlashes(`${'/'.repeat(200_000)}x`)).toHaveLength(200_001);
+    expect(performance.now() - start).toBeLessThan(1000);
   });
 });

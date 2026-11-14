@@ -80,5 +80,8 @@
       "types": "./vendor/*.d.ts",
       "default": "./vendor/*.js"
     }
+  },
+  "overrides": {
+    "minimatch": "^11.0.1"
   }
 }

@@ -53,6 +53,6 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+      - run: npm ci --omit=dev --ignore-scripts --no-audit --no-fund
       - name: Start the server and list its tools over stdio
         run: node scripts/smoke.mjs

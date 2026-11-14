@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { ElicitResultSchema } from '@modelcontextprotocol/sdk/types.js';
 
-import { DEFAULT_APP_URL } from './config.js';
+import { DEFAULT_APP_URL, trimTrailingSlashes } from './config.js';
 import { type ErrorContext, ToolInputError, toToolError } from './errors.js';
 import { sanitizeDeep, sanitizeText } from './format.js';
 import { registerAgentCheckTools } from './tools/agent-checks.js';
@@ -55,7 +55,7 @@ Agent guardrails: call vetkit_check_packages before installing or adding any dep
  * Creates an `McpServer` with the vetkit tools registered. Connecting a transport is up to the caller.
  */
 export function createVetkitMcpServer(api: VetkitApi, opts: VetkitMcpServerOptions = {}): McpServer {
-  const appUrl = (opts.appUrl ?? DEFAULT_APP_URL).replace(/\/+$/, '');
+  const appUrl = trimTrailingSlashes(opts.appUrl ?? DEFAULT_APP_URL);
   const pollIntervalMs = opts.pollIntervalMs ?? 3000;
   const orgs = new OrgResolver(api, opts.orgId);
 

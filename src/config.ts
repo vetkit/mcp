@@ -38,7 +38,14 @@ function parseBaseUrl(name: string, raw: string): string {
   }
   if (url.username || url.password) throw new ConfigError(`${name} must not contain credentials.`);
   if (url.search || url.hash) throw new ConfigError(`${name} must not contain a query string or fragment.`);
-  return url.origin + url.pathname.replace(/\/+$/, '').replace(/\/v1$/, '');
+  return url.origin + trimTrailingSlashes(url.pathname).replace(/\/v1$/, '');
+}
+
+/** Removes trailing `/` in linear time (a `/\/+$/` regex is quadratic on long runs of slashes). */
+export function trimTrailingSlashes(value: string): string {
+  let end = value.length;
+  while (end > 0 && value.charCodeAt(end - 1) === 47) end--;
+  return value.slice(0, end);
 }
 
 const read = (env: NodeJS.ProcessEnv, name: string): string | undefined => {

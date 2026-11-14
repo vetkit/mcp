@@ -15,7 +15,7 @@
  * `possible` payload needs a `knownGap` note in the baseline.
  */
 import { randomBytes } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -481,12 +481,17 @@ describe('X06 agent attack harness', () => {
   });
 
   it('matches the committed baseline and does not regress any payload', () => {
-    const exists = existsSync(BASELINE_URL);
-    if (!exists) {
+    let text: string;
+    try {
+      text = readFileSync(BASELINE_URL, 'utf8');
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err;
+      // First run: record the baseline. `wx` fails instead of overwriting a file created meanwhile.
+      text = `${JSON.stringify(baselineFrom(report, PAYLOADS), null, 2)}\n`;
       mkdirSync(dirname(fileURLToPath(BASELINE_URL)), { recursive: true });
-      writeFileSync(BASELINE_URL, `${JSON.stringify(baselineFrom(report, PAYLOADS), null, 2)}\n`);
+      writeFileSync(BASELINE_URL, text, { flag: 'wx' });
     }
-    const baseline = JSON.parse(readFileSync(BASELINE_URL, 'utf8')) as Baseline;
+    const baseline = JSON.parse(text) as Baseline;
     expect(compareToBaseline(report, baseline)).toEqual([]);
   });
 });
