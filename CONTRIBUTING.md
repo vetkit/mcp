@@ -36,9 +36,11 @@ The smoke test starts the built server over stdio and sends no API request.
 ## Releases
 
 Releases are cut by pushing a `vX.Y.Z` tag that matches `package.json`. The
-[release workflow](.github/workflows/release.yml) runs the checks and publishes to npm with
+[release workflow](.github/workflows/release.yml) runs the checks and stages the version on npm with
 [trusted publishing](https://docs.npmjs.com/trusted-publishers): no npm token is stored, and every version carries
-a provenance statement that links it to the commit and workflow run that built it. Verify a version with:
+a provenance statement that links it to the commit and workflow run that built it. The workflow can only stage a
+release; a maintainer approves it on npmjs.com with two-factor authentication before it is published. Verify a
+version with:
 
 ```sh
 npm view @vetkit/mcp dist.attestations

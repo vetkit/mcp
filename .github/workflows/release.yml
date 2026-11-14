@@ -37,6 +37,10 @@ jobs:
       - run: npm run build
       - name: Smoke test
         run: node scripts/smoke.mjs
+      # npm 12 adds staged publishing (needs Node.js 24.15+).
+      - run: npm install --global npm@12.2.2 --ignore-scripts --no-audit --no-fund
       # Trusted publishing: no npm token is stored; npm verifies this workflow over OIDC and
-      # attaches a provenance statement that links the package to this commit.
-      - run: npm publish --provenance --access public --ignore-scripts
+      # attaches a provenance statement that links the package to this commit. The trusted
+      # publisher may only stage: a maintainer approves the version on npmjs.com with 2FA
+      # (`npm stage approve <id>`) before it is published.
+      - run: npm stage publish . --provenance --access public --ignore-scripts
