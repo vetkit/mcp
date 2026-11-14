@@ -1,13 +1,12 @@
+# Dependency versions come from vetkit's monorepo and are overwritten by every export, so npm version
+# updates are made there. Dependabot security updates (enabled in Settings) still open pull requests here.
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
-    groups:
-      dev-dependencies:
-        dependency-type: development
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
   - package-ecosystem: github-actions
     directory: /
     schedule:

@@ -12,8 +12,11 @@ permissions:
 
 jobs:
   analyze:
+    # Code scanning uploads need a public repository (or GitHub Advanced Security).
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       contents: read
       security-events: write
     steps:

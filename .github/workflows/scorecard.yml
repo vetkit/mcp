@@ -11,6 +11,8 @@ permissions: read-all
 
 jobs:
   analysis:
+    # Scorecard reads the repository through the GitHub API and publishes public results only.
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
