@@ -1,0 +1,84 @@
+{
+  "name": "@vetkit/mcp",
+  "version": "0.3.1",
+  "description": "MCP server for vetkit: connect GitHub, Bitbucket and GitLab repos, run security and code quality audits and read findings and reports from any stdio-capable MCP client, including Cursor, VS Code, Codex and Claude.",
+  "mcpName": "dev.vetkit/mcp",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "vetkit",
+    "code-audit",
+    "security",
+    "claude",
+    "sast",
+    "secrets",
+    "code-quality"
+  ],
+  "homepage": "https://vetkit.dev/en/docs/mcp/",
+  "bugs": {
+    "url": "https://github.com/vetkit/mcp/issues",
+    "email": "contact@vetkit.dev"
+  },
+  "license": "MIT",
+  "author": "vetkit",
+  "type": "module",
+  "bin": {
+    "vetkit-mcp": "./dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build && npm test",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "re2js": "2.9.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "msw": "^2.15.0",
+    "tsdown": "^0.23.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.1",
+    "vitest": "^5.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vetkit/mcp.git"
+  },
+  "imports": {
+    "#vendor/*": {
+      "types": "./vendor/*.d.ts",
+      "default": "./vendor/*.js"
+    }
+  }
+}

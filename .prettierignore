@@ -1,0 +1,4 @@
+vendor/
+dist/
+coverage/
+package-lock.json
