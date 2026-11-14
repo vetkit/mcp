@@ -1,6 +1,6 @@
 {
   "name": "@vetkit/mcp",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "MCP server for vetkit: connect GitHub, Bitbucket and GitLab repos, run security and code quality audits and read findings and reports from any stdio-capable MCP client, including Cursor, VS Code, Codex and Claude.",
   "mcpName": "dev.vetkit/mcp",
   "keywords": [

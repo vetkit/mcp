@@ -5,6 +5,19 @@ All notable changes to `@vetkit/mcp` are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-11-14
+
+### Security
+
+- Trailing slashes are trimmed from `VETKIT_API_URL` and `VETKIT_APP_URL` in linear time. The previous regular
+  expression could take quadratic time on a value with a very long run of `/` characters (found by CodeQL). Both
+  values come from your own environment, so the practical risk was low.
+
+### Changed
+
+- Source, tests and the release pipeline are public at <https://github.com/vetkit/mcp>. Releases are built by
+  GitHub Actions with npm trusted publishing and carry a provenance statement.
+
 ## [0.3.1] - 2026-11-14
 
 ### Security
